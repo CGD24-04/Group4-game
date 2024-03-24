@@ -3,6 +3,8 @@
 
 #include "IsometricCameraComponent.h"
 
+#include "GameFramework/Character.h"
+
 // Sets default values for this component's properties
 UIsometricCameraComponent::UIsometricCameraComponent()
 {
@@ -10,9 +12,6 @@ UIsometricCameraComponent::UIsometricCameraComponent()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	SpringArm->bDoCollisionTest = false;
-	SpringArm->bInheritPitch = false;
-	SpringArm->bInheritRoll = false;
-	SpringArm->bInheritYaw = false;
 	SpringArm->TargetOffset = PositionOffset;
 	SpringArm->TargetArmLength = 0;
 	SpringArm->SetupAttachment(this);
@@ -27,8 +26,13 @@ void UIsometricCameraComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	Owner = GetOwner();
-	Owner->AddInstanceComponent(SpringArm);
-	Owner->AddInstanceComponent(Camera);
+	if (ACharacter* _ = Cast<ACharacter>(Owner))
+		bIsOwnerCharacter = true;
+	else
+		bIsOwnerCharacter = false;
+	
+	UpdateSpringArm();
+	UpdateCamera();
 }
 
 void UIsometricCameraComponent::OnComponentDestroyed(bool bDestroyingHierarchy)
@@ -45,9 +49,29 @@ void UIsometricCameraComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (SpringArm)
-		SpringArm->TargetOffset = PositionOffset;
+	UpdateSpringArm();
+	UpdateCamera();
+}
 
-	if (Camera)
-		Camera->SetWorldRotation(FRotator::MakeFromEuler(RotationOffset));
+void UIsometricCameraComponent::UpdateCamera()
+{
+	if (!Camera)
+		return;
+
+	Camera->FieldOfView = CameraFieldOfView;
+	Camera->SetWorldRotation(FRotator::MakeFromEuler(RotationOffset));
+}
+
+void UIsometricCameraComponent::UpdateSpringArm()
+{
+	if (!SpringArm)
+		return;
+
+	SpringArm->TargetOffset = PositionOffset;
+	
+	bool bInherit = bAutomaticallyDetermineActorType && bIsOwnerCharacter ? true : bInheritRotation;
+	
+	SpringArm->bInheritPitch = bInherit;
+	SpringArm->bInheritRoll = bInherit;
+	SpringArm->bInheritYaw = bInherit;
 }
