@@ -37,6 +37,13 @@ class AGroup4Character : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SprintAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* CrouchAction;
+
 public:
 	AGroup4Character();
 	
@@ -48,7 +55,17 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+	
+	//called for speeding up player
+	void Sprint();
+
+	//called for slowing down player
+	void StopSprint();
+
+	//called for player crouching
+	void StartCrouch();
+
+	void StopCrouch();
 
 protected:
 	// APawn interface

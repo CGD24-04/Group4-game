@@ -32,7 +32,7 @@ AGroup4Character::AGroup4Character()
 	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MaxWalkSpeed = 250.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
@@ -84,6 +84,13 @@ void AGroup4Character::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AGroup4Character::Look);
 
+		//sprinting
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &AGroup4Character::Sprint);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AGroup4Character::StopSprint);
+
+		//Crouching
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AGroup4Character::StartCrouch);
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AGroup4Character::StopCrouch);
 	}
 
 }
@@ -124,6 +131,28 @@ void AGroup4Character::Look(const FInputActionValue& Value)
 	}
 }
 
+void AGroup4Character::Sprint()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+}
 
+void AGroup4Character::StopSprint()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 250.f;
+}
 
+void  AGroup4Character::StartCrouch()
+{
+	GetCharacterMovement()->MaxWalkSpeedCrouched = 200.f;
+	Crouch();
+	this->GetCapsuleComponent()->SetVisibility(true);
+	this->GetCapsuleComponent()->SetHiddenInGame(false);
+}
+
+void  AGroup4Character::StopCrouch()
+{
+	UnCrouch();
+	this->GetCapsuleComponent()->SetVisibility(true);
+	this->GetCapsuleComponent()->SetHiddenInGame(false);
+}
 
