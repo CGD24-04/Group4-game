@@ -8,6 +8,7 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Group4Character.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -38,6 +39,7 @@ APlayerCharacter::APlayerCharacter()
 	Scale = this->GetActorScale3D();
 	this->GetCapsuleComponent()->SetVisibility(true);
 	this->GetCapsuleComponent()->SetHiddenInGame(false);
+	
 }
 
 // Called when the game starts or when spawned
@@ -54,6 +56,11 @@ void APlayerCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	//gets the camera angle for player movement
+	//FVector2D CameraAxisVector =(Camera->RotationOffset.Y,Camera->RotationOffset.Z);
+	
+	//use to control the Rotation of the players Forward Direction
+	AddControllerYawInput(15);
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -83,6 +90,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 void APlayerCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
+	
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	
 	if (Controller != nullptr)
