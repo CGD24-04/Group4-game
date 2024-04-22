@@ -75,8 +75,3 @@ void UIsometricCameraComponent::UpdateSpringArm()
 	SpringArm->bInheritRoll = bInherit;
 	SpringArm->bInheritYaw = bInherit;
 }
-
-UCameraComponent* UIsometricCameraComponent::GetCamera()
-{
-	return Camera;
-}
