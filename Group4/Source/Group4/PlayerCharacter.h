@@ -67,7 +67,10 @@ protected:
 private:
 	FVector Scale;
 	bool bCrouching = false;
+	
+	UPROPERTY()
 	UIsometricCameraComponent* Camera;
+	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
