@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "TorchComponent.h"
 #include "PlayerCharacter.generated.h"
 
 
@@ -40,6 +41,9 @@ class GROUP4_API APlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UTorchComponent> TorchComponent;
 
 protected:
 	/** Called for movement input */

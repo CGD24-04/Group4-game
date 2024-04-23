@@ -17,9 +17,9 @@ class GROUP4_API UTorchComponent : public USceneComponent
 public:	
 	UTorchComponent();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Torch")
 	bool bIsEnabledByDefault;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Torch")
 	bool bIsTorchOn;
 
 	UFUNCTION(BlueprintCallable)
@@ -31,5 +31,5 @@ protected:
 	
 private:
 	UPROPERTY(EditAnywhere)
-	TObjectPtr<USpotLightComponent> LightComponent;
+	USpotLightComponent* LightComponent;
 };

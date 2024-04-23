@@ -9,11 +9,12 @@ UTorchComponent::UTorchComponent()
 {
 	LightComponent = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flashlight"));
 	LightComponent->SetupAttachment(this);
+	LightComponent->RegisterComponent();
 }
 
 void UTorchComponent::OnComponentCreated()
 {
-	LightComponent->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);
+	//LightComponent->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void UTorchComponent::BeginPlay()

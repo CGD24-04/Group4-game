@@ -15,6 +15,10 @@ APlayerCharacter::APlayerCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
 
+	TorchComponent = CreateDefaultSubobject<UTorchComponent>(TEXT("Torch"));
+	TorchComponent->SetupAttachment(RootComponent);
+	TorchComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
