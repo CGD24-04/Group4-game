@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "IsometricCameraComponent.h"
 #include "InputActionValue.h"
+#include "TorchComponent.h"
 #include "PlayerCharacter.generated.h"
 
 
