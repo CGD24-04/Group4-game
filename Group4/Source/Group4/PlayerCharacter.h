@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "IsometricCameraComponent.h"
 #include "InputActionValue.h"
+#include "TorchComponent.h"
 #include "PlayerCharacter.generated.h"
 
 
@@ -66,7 +68,10 @@ protected:
 private:
 	FVector Scale;
 	bool bCrouching = false;
-
+	
+	UPROPERTY()
+	UIsometricCameraComponent* Camera;
+	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

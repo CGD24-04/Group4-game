@@ -1,4 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+//OWNED BY: JACK
 
 #pragma once
 
@@ -7,7 +8,6 @@
 #include "Components/SceneComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "IsometricCameraComponent.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class GROUP4_API UIsometricCameraComponent : public USceneComponent
@@ -55,6 +55,4 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
 };
