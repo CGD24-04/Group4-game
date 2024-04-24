@@ -8,6 +8,7 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Group4Character.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -38,6 +39,7 @@ APlayerCharacter::APlayerCharacter()
 	Scale = this->GetActorScale3D();
 	this->GetCapsuleComponent()->SetVisibility(true);
 	this->GetCapsuleComponent()->SetHiddenInGame(false);
+	
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +47,8 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Camera = GetComponentByClass<UIsometricCameraComponent>();
+	
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -54,6 +58,8 @@ void APlayerCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	//gets the camera angle for player movement
+	//FVector2D CameraAxisVector =(Camera->RotationOffset.Y,Camera->RotationOffset.Z);
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -83,13 +89,19 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 void APlayerCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
+	
 	FVector2D MovementVector = Value.Get<FVector2D>();
-
+	
 	if (Controller != nullptr)
 	{
+		
 		// find out which way is forward
+		float RotationOffset = 0;
+		if (Camera)
+			RotationOffset = Camera->RotationOffset.Z;
+		
 		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FRotator YawRotation(0, Rotation.Yaw + RotationOffset, 0);
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
