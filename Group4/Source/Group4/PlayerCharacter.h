@@ -42,9 +42,6 @@ public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
 
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UTorchComponent> TorchComponent;
-
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
