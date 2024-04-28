@@ -14,7 +14,8 @@ enum EInventoryItems
 	Screwdriver,
 	Notebook,
 	Torch,
-	Revolver
+	Revolver,
+	Tape
 };
 
 USTRUCT(BlueprintType)
