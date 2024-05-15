@@ -113,6 +113,9 @@ void APlayerCharacter::Move(const FInputActionValue& Value)
 
 void APlayerCharacter::Sprint()
 {
+	if (!bIsSprintEnabled)
+		return;
+	
 	//can only sprint when standing
 	if (bCrouching == false)
 	{
@@ -122,6 +125,9 @@ void APlayerCharacter::Sprint()
 
 void APlayerCharacter::StopSprint()
 {
+	if (!bIsSprintEnabled)
+		return;
+	
 	if (bCrouching == false)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 250.f;
@@ -130,6 +136,9 @@ void APlayerCharacter::StopSprint()
 
 void APlayerCharacter::StartCrouch()
 {
+	if (!bIsCrouchEnabled)
+		return;
+	
 	GetCharacterMovement()->MaxWalkSpeed = 200.f;
 	this->SetActorScale3D(Scale * 0.5);
 	bCrouching = true;
@@ -137,6 +146,9 @@ void APlayerCharacter::StartCrouch()
 
 void APlayerCharacter::StopCrouch()
 {
+	if (!bIsCrouchEnabled)
+		return;
+		
 	GetCharacterMovement()->MaxWalkSpeed = 250.f;
 	this->SetActorScale3D(Scale * 1);
 	bCrouching = false;
