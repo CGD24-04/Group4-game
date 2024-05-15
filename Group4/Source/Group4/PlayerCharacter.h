@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "IsometricCameraComponent.h"
 #include "InputActionValue.h"
-#include "TorchComponent.h"
 #include "PlayerCharacter.generated.h"
 
 
@@ -34,6 +33,12 @@ class GROUP4_API APlayerCharacter : public ACharacter
 	/** Crouch Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* CrouchAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input, meta = (AllowPrivateAccess = "true"))
+	bool bIsSprintEnabled = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input, meta = (AllowPrivateAccess = "true"))
+	bool bIsCrouchEnabled = false;
 
 public:
 	// Sets default values for this character's properties
